@@ -38,6 +38,4 @@ private:
 	string message;
 };
 
-class 
-
 #endif
