@@ -1,0 +1,84 @@
+======= MENU =======
+0.EXIT.
+1.INSERT SOME NODE.
+2.ERASE SOME NODE.
+3.ASCENDING ORDER
+4.DECENDING ORDER
+5.FIND A NODE
+6.PREORDER
+7.INORDER
+8.POSTORDER
+9.DRAW TREE
+========================================================================
+Enter: 3
+//输入3 以得到随机生成的初始树的生序排序
+( 0,Black )     ( 2,Red )       ( 24,Red )      ( 34,Black )    ( 41,Black )    ( 58,Red )      ( 62,Black )    ( 67,Red )      ( 69,Red )      ( 78,Black )4
+========================================================================
+Enter: 1
+//输入1 以进入插入结点的功能
+        plz enter the number of node you want to insert to the rbtree.
+Enter: 3
+//输入3 以插入3个结点
+Enter node: 1
+//插入元素为1的节点
+Enter node: 34
+The Element had already been in the tree
+//插入元素为34的节点,但是树中已有这个结点,故而插入失败,程序仍然进行
+
+Enter node: 21
+//插入元素为21的节点
+        INSERT SUCCEED.
+========================================================================
+Enter: 2
+//输入2 以进入删除节点的功能
+        plz enter the number of node you want to erase from the rbtree.
+
+Enter: 2
+//输入2 以删除2个结点
+Enter node: 78
+Element 78 erase succeed.
+//将储存元素为78的结点删除
+Enter node: 4
+Element 4 can not be found in the tree,erase failed
+//尝试将储存元素为4的结点删除,但节点不存在,故而删除失败.程序仍然进行
+        DELETE SUCCEED.
+========================================================================
+Enter: 5
+//输入5 以进入查找结点的功能
+        plz enter the node of node you want to find.
+Enter: 62
+//查找储存元素为62的元素
+The node is at the 3 position
+//显示元素在树的3号位
+Enter: 5
+Enter: 20
+20 can not be found in the tree
+========================================================================
+Enter: 4
+//输入4 以得到二叉树的降序排序
+( 69,Black )    ( 67,Red )      ( 62,Red )      ( 58,Black )    ( 41,Black )    ( 34,Red )      ( 24,Black )    ( 21,Red )      ( 2,Red )       ( 1,Red )       ( 0,Black )
+========================================================================
+Enter: 9
+//输入9 以得到绘制的树状图
+                    	    /---69,Black
+
+                              \---67,Red
+
+          /---62,Red
+
+                    \---58,Black
+
+41,Black
+
+                              /---34,Red
+
+                    /---24,Black
+
+                              \---21,Red
+
+          \---2,Red
+
+                              /---1,Red
+
+                    \---0,Black
+//由得到的图可得进行一系列操作的树 仍然保持红黑树的着色限制,并且仍然为二叉排序树
