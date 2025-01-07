@@ -79,8 +79,7 @@ public:
 };
 
 template<typename T>
-avlNode<T>* AVL<T>::leftRotate(avlNode<T>* Node)//×¢Òâ ´Ëº¯Êı½áÊøÊ±,NodeµÄ×æÏÈµÄ×Ó½ÚµãÎ´¸üĞÂ
-{
+avlNode<T>* AVL<T>::leftRotate(avlNode<T>* node)
 	avlNode<T>* newNode = Node->rightChild;
 	avlNode<T>* Temp = newNode->leftChild;
 	newNode->leftChild = Node;
@@ -91,7 +90,7 @@ avlNode<T>* AVL<T>::leftRotate(avlNode<T>* Node)//×¢Òâ ´Ëº¯Êı½áÊøÊ±,NodeµÄ×æÏÈµÄ
 }
 
 template<typename T>
-avlNode<T>* AVL<T>::rightRotate(avlNode<T>* Node)//×¢Òâ ´Ëº¯Êı½áÊøÊ±,NodeµÄ×æÏÈµÄ×Ó½ÚµãÎ´¸üĞÂ
+avlNode<T>* AVL<T>::rightRotate(avlNode<T>* Node)
 {
 	avlNode<T>* newNode = Node->leftChild;
 	avlNode<T>* Temp = newNode->rightChild;
@@ -102,10 +101,9 @@ avlNode<T>* AVL<T>::rightRotate(avlNode<T>* Node)//×¢Òâ ´Ëº¯Êı½áÊøÊ±,NodeµÄ×æÏÈµ
 	return newNode;
 }
 
-//Ê¹ÓÃµİ¹éµÄ·½·¨ ¿ÉÒÔÊ¹º¯ÊıinsertºÍerase ´ÓÉÏÏòÏÂËÑË÷ºó,ÄÜ¹»°´ÕÕÔ­À´µÄÂ·¾¶·µ»Øµ½root,²¢ÔÚ·µ»ØµÄÍ¾ÖĞ¶Ô¸÷¸ö½ÚµãµÄheight½øĞĞĞŞ¸Ä
 template<typename T>
 avlNode<T>* AVL<T>::insert(avlNode<T>* node, T theElement)
-{//ÏÈÏòÏÂÑ°ÕÒ,¼ÇÂ¼¿ÉÄÜ»áÊ§ºâµÄ½Úµã
+{
 	if (node == nullptr)
 	{
 		size++;
@@ -125,94 +123,79 @@ avlNode<T>* AVL<T>::insert(avlNode<T>* node, T theElement)
 	updateHeight(node);
 	int balance = getBF(node);
 
-	// ×ó×óÇé¿ö
 	if (balance > 1 && theElement < node->leftChild->element) {
 		return rightRotate(node);
 	}
-	// ÓÒÓÒÇé¿ö
 	if (balance < -1 && theElement > node->rightChild->element) {
 		return leftRotate(node);
 	}
-	// ×óÓÒÇé¿ö
 	if (balance > 1 && theElement > node->leftChild->element) {
 		node->leftChild = leftRotate(node->leftChild);
 		return rightRotate(node);
 	}
-	// ÓÒ×óÇé¿ö
 	if (balance < -1 && theElement < node->rightChild->element) {
 		node->rightChild = rightRotate(node->rightChild);
 		return leftRotate(node);
 	}
-	return node; // ·µ»ØÎ´¸Ä±äµÄ½ÚµãÖ¸Õë
+	return node; 
 }
 
 template<typename T>
-avlNode<T>* AVL<T>::erase(avlNode<T>* node, T theElement) {
+avlNode<T>* AVL<T>::erase(avlNode<T>* node, T theElement)
+ {
 	if (node == nullptr) {
-		cout << "ÔªËØ " << theElement << " Î´ÕÒµ½£¬É¾³ıÊ§°Ü¡£" << endl;
-		throw(illegalParameterValue("Element could not be found.")); // ÔªËØÎ´ÕÒµ½
+		cout << "Ôªï¿½ï¿½ " << theElement << " Î´ï¿½Òµï¿½ï¿½ï¿½É¾ï¿½ï¿½Ê§ï¿½Ü¡ï¿½" << endl;
+		throw(illegalParameterValue("Element could not be found."));
 	}
 
-	// Ö´ĞĞ±ê×¼µÄ¶ş²æËÑË÷Ê÷É¾³ı²Ù×÷
 	if (theElement < node->element) {
-		node->leftChild = erase(node->leftChild, theElement); // Ïò×ó×ÓÊ÷ÏòÏÂÑ°ÕÒ
+		node->leftChild = erase(node->leftChild, theElement); 
 	}
 	else if (theElement > node->element) {
-		node->rightChild = erase(node->rightChild, theElement); // ÏòÓÒ×ÓÊ÷ÏòÏÂÑ°ÕÒ
+		node->rightChild = erase(node->rightChild, theElement); 
 	}
 	else {
-		// ÕÒµ½ÒªÉ¾³ıµÄ½Úµã
 		if (node->leftChild == nullptr) {
-			avlNode<T>* temp = node->rightChild; // Ö»ÓĞÓÒ×ÓÊ÷
-			delete node; // É¾³ıµ±Ç°½Úµã
-			return temp; // ·µ»ØÓÒ×ÓÊ÷
+			avlNode<T>* temp = node->rightChild;
+			delete node;
+			return temp;
 		}
 		else if (node->rightChild == nullptr) {
-			avlNode<T>* temp = node->leftChild; // Ö»ÓĞ×ó×ÓÊ÷
-			delete node; // É¾³ıµ±Ç°½Úµã
-			return temp; // ·µ»Ø×ó×ÓÊ÷
+			avlNode<T>* temp = node->leftChild; 
+			delete node;
+			return temp;
 		}
 
-		// ÓĞÁ½¸ö×Ó½Úµã£ºÕÒµ½ÓÒ×ÓÊ÷ÖĞµÄ×îĞ¡½Úµã£¨ÖĞĞòºó¼Ì£©
 		avlNode<T>* temp = node->rightChild;
 		while (temp->leftChild != nullptr) {
-			temp = temp->leftChild; // ÕÒµ½ÓÒ×ÓÊ÷ÖĞµÄ×îĞ¡½Úµã
+			temp = temp->leftChild; 
 		}
 
-		// ½«ÖĞĞòºó¼ÌµÄÖµ¸´ÖÆµ½µ±Ç°½Úµã
 		node->element = temp->element;
 
-		// É¾³ıÖĞĞòºó¼Ì
 		node->rightChild = erase(node->rightChild, temp->element);
 	}
 
-	// ¸üĞÂµ±Ç°½ÚµãµÄ¸ß¶È
 	updateHeight(node);
 
-	// »ñÈ¡µ±Ç°½ÚµãµÄÆ½ºâÒò×Ó
 	int balance = getBF(node);
 
-	// ½øĞĞÆ½ºâ²Ù×÷
-	// LLÇé¿ö
 	if (balance > 1 && getBF(node->leftChild) >= 0) {
 		return rightRotate(node);
 	}
-	// LRÇé¿ö
 	if (balance > 1 && getBF(node->leftChild) < 0) {
 		node->leftChild = leftRotate(node->leftChild);
 		return rightRotate(node);
 	}
-	// RRÇé¿ö
 	if (balance < -1 && getBF(node->rightChild) <= 0) {
 		return leftRotate(node);
 	}
-	// RLÇé¿ö
 	if (balance < -1 && getBF(node->rightChild) > 0) {
 		node->rightChild = rightRotate(node->rightChild);
 		return leftRotate(node);
 	}
 
-	return node; // ·µ»Ø£¨¿ÉÄÜÒÑ¾­¸Ä±äµÄ£©×ÓÊ÷¸ù½Úµã
+	return node;
 }
 
 template<typename T>
